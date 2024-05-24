@@ -8,6 +8,10 @@ const Schemauser=joi.object().keys({
    
     
 })
+const deleteUserSchema=joi.object().keys({
+    userId:joi.string().required()
+})
+
 
 module.exports={
     createUser:async(req,res)=>{
@@ -48,5 +52,25 @@ module.exports={
         
       }
     },
+    deleteUser:async(req,res)=>{
+        try {
+            const validate= await deleteUserSchema.validateAsync(req.query);
+            const deleteUser=await userservice.deleteUser(validate.userId);
+            if(deleteUser.error){
+                return res.send({
+                    message:"user deleted",
+                    error:deleteUser.error
+                })
+            }
+            return {
+                response:deleteUser.response,
+            }
+        } catch (error) {
+            return res.send({
+                message:error.message
+
+            })
+        }
+    }
    
 }

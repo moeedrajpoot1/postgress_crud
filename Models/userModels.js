@@ -47,5 +47,26 @@ module.exports={
             }
         }
     },
-    
+    deleteUser:async(userId)=>{
+        try {
+            const deleteUser=await models.users.destroy({userId:userId})
+            return {
+                response:deleteUser,
+            }
+        } catch (error) {
+            return {error:error}
+        }
+    },
+      updateUser:async(userId,body)=>{
+        try {
+            const updateUser=await models.users.update({...body},{where:{userId:userId}})
+            return{
+                response:updateUser
+            }
+        } catch (error) {
+            return{
+                error:error
+            }
+        }
+    }
 }
