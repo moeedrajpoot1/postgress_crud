@@ -12,6 +12,11 @@ const deleteUserSchema=joi.object().keys({
     userId:joi.string().required()
 })
 
+const updateUserSchema=joi.object().keys({
+    userId:joi.string().required(),
+    userName:joi.string(),
+})
+
 
 module.exports={
     createUser:async(req,res)=>{
@@ -71,6 +76,27 @@ module.exports={
 
             })
         }
+    },
+
+
+updateUser:async(req,res)=>{
+    try {
+        const validate=await updateUserSchema.validateAsync(req.body)
+        const updateUser= await userservice.updateUser(validate)
+        if(updateUser.error){
+            return res.send({
+                error:updateUser.error
+            })
+        }
+        return res.send({
+            response:updateUser.response
+        })
+
+    } catch (error) {
+        return res.send({
+            message:error.message
+        })
     }
+}
    
 }

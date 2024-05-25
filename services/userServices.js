@@ -61,6 +61,30 @@ module.exports={
         } catch (error) {
             return {error:error}
         }
+    },
+    
+
+    updateUser:async(body)=>{
+        try {
+            const updateUser=await userModels.updateUser({...body})
+            if(updateUser.error || !updateUser.response){
+                return{
+                    message:"Unable to Update",
+                    error:updateUser?.error|| updateUser .response
+                }
+            }
+            return {
+                response:{response:updateUser.response,
+                    message:"User updated"}
+            }
+
+        } catch (error) {
+            return{
+                error:error
+            }
+        }
     }
+
+
   
 }

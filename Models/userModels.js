@@ -57,7 +57,7 @@ module.exports={
             return {error:error}
         }
     },
-      updateUser:async(userId,body)=>{
+      updateUser:async({userId,...body})=>{
         try {
             const updateUser=await models.users.update({...body},{where:{userId:userId}})
             return{
