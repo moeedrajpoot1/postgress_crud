@@ -26,7 +26,27 @@ module.exports={
         return res.send({message:error.message})
       }
         
+        },
+    getAlltask:async(req,res)=>{
+      try {
+        const task = await taskService.getAlltask()
+        console.log("controller  ", task)
+        if(task.error){
+          return res.send({
+            error:task.error
+          })
+
         }
+        return res.send({
+          response:task.response
+        })
+        
+      } catch (error) {
+        return res.send({
+          message:error.message
+        })
+      }
+    }
 }
 
 
