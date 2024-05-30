@@ -4,7 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const userRouters=require("./routers/userRouter")
-
+const taskRouter=require("./routers/taskRouter")
+const cors=require("cors")
 var app = express();
 
 // view engine setup
@@ -15,8 +16,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors())
 
 app.use("/user",userRouters)
+app.use("/task",taskRouter)
 
 
 // catch 404 and forward to error handler
