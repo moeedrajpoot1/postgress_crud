@@ -86,7 +86,7 @@ updateUser:async(req,res)=>{
         if(updateUser.error){
             return res.send({
                 error:updateUser.error
-            })
+            }) 
         }
         return res.send({
             response:updateUser.response

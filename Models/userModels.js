@@ -17,7 +17,13 @@ module.exports={
     getUser:async(userId,userName)=>{
         try {
             const user= await models.users.findOne({
-                ...(userId ? {where:{userId:userId}}:{where:{userName:userName}})
+                ...(userId ? {where:{userId:userId}}:{where:{userName:userName}}),
+           
+           
+           attributes:{
+             exclude:["deletedAt","createdAt","updatedAt"]
+           }
+           
             });
            
             return{
