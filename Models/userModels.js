@@ -38,15 +38,18 @@ module.exports={
             }
         }
     },
-    getAllUser:async()=>{
+    getAllUser:async(query)=>{
         try {
+
             const user=await models.users.findAll({
                 attributes:["userId","userName"],
                 include:{
                     model:models.tasks
-                   
-                }
+                   },
+            offset:query.offset,
+            limit:query.limit
             });
+            console.log("models users  ",user)
             return{
                 response:user
             }

@@ -17,14 +17,18 @@ const updateUserSchema=joi.object().keys({
     userName:joi.string(),
 })
 
+const getAllUser=joi.object().keys({
+    pageNo:joi.number().min(1).required(),
+    limit:joi.number().valid(5,10)
+})
 
 module.exports={
     createUser:async(req,res)=>{
         try {
             const validate=await Schemauser.validateAsync(req.body)
-            console.log(validate,"validate")
+        
             const user= await userservice.createUser(validate)
-            console.log(user,"User")
+            
             if(user.error){
                 return {
                     error: user.error
@@ -42,7 +46,10 @@ module.exports={
     },
     getAllUser:async(req,res)=>{
       try {
-        const user=await userservice.getAllUser()
+        console.log("Get All Userrrrsssssss Controllers")
+        const validate= await getAllUser.validateAsync(req.query)
+        const user=await userservice.getAllUser(validate)
+        console.log("get users controller",user)
         if(user.error){
            return res.send({error:user.error})
         }

@@ -14,7 +14,7 @@ module.exports={
             }
         }
     },
-    getAlltask:async(body)=>{
+    getAlltask:async()=>{
         try {
             const task=await models.tasks.findAll({
                 attributes:{

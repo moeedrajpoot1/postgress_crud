@@ -2,7 +2,7 @@ require("dotenv").config()
 const {compare}=require("bcryptjs")
 const userModel=require("../Models/userModels")
 const {sign}=require("jsonwebtoken")
-
+  
 module.exports={
     login:async(body)=>{
         try {

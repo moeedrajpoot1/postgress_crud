@@ -8,7 +8,9 @@ class users extends Model {}
 users.init({
     userId:{
         primaryKey:true,
-        type:DataTypes.STRING()
+        
+        type:DataTypes.STRING(),
+        
     },
     userName:{
       

@@ -20,7 +20,9 @@ description:{
 userId:{
     type:DataTypes.STRING(255),
     allowNull:false,
+   
     references:{
+        
         model:users,
         key:"userId"
     }

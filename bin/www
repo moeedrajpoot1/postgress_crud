@@ -29,7 +29,7 @@ Db.sequelize.sync({alter:true,logging:false}).then(()=>{
   server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-}).catch((error)=>{console.log()})
+}).catch((error)=>{console.log(error)})
 
 
 /**

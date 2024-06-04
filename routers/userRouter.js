@@ -4,7 +4,7 @@ const {createUser,getAllUser,deleteUser,updateUser}=require("../controllers/user
 const {middleware}=require("../middleware")
 
 router.post("/create",createUser)
-router.get("/get",middleware,getAllUser)
+router.get("/get",getAllUser)
 router.delete("/delete",deleteUser)
 router.put("/update",updateUser)
 

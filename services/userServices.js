@@ -26,9 +26,10 @@ module.exports={
             }
         }
     },
-    getAllUser:async()=>{
+    getAllUser:async(query)=>{
         try {
-            const user =await userModel.getAllUser()
+            query.offset=(query.pageNo-1)*query.limit
+            const user =await userModel.getAllUser(query)
             if(user.error){
               return{
                 message:"no user Exists",
