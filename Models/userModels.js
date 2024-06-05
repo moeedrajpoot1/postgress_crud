@@ -1,6 +1,6 @@
 
 const {models}=require("./index")
-
+const {Op}=require("sequelize")
 module.exports={
     createUser:async(body)=>{
         try {
@@ -42,12 +42,26 @@ module.exports={
         try {
 
             const user=await models.users.findAll({
+                where:{
+                ...(query.userName 
+                    ? {userName:{[Op.substring]:query.userName}}:true
+                ),
+                ...(query.createdAt 
+                    ? {createdAt:{[Op.substring]:query.createdAt}}:true
+                )
+                },
                 attributes:["userId","userName"],
                 include:{
                     model:models.tasks
                    },
             offset:query.offset,
-            limit:query.limit
+            limit:query.limit,
+            order:[
+                [
+                query.sortBy? query.sortBy :"createdAt",
+                query.orderBy?query.orderBy:"ASC"
+                ]
+            ]
             });
             console.log("models users  ",user)
             return{

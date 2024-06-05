@@ -19,7 +19,10 @@ const updateUserSchema=joi.object().keys({
 
 const getAllUser=joi.object().keys({
     pageNo:joi.number().min(1).required(),
-    limit:joi.number().valid(5,10)
+    limit:joi.number().valid(5,10),
+    userName:joi.string(),
+    sortBy:joi.string().valid("createdAt","userName","deletedAt","updatedAt","userId"),
+    orderBy:joi.string().valid("ASC","DESC")
 })
 
 module.exports={
