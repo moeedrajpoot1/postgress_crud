@@ -3,6 +3,7 @@ const authServices=require("../services/authServices")
 
 const loginSchema=joi.object().keys({
     userName:joi.string().required(),
+    
     password:joi.string().min(3).max(18).required()
 
 })
@@ -12,6 +13,7 @@ module.exports={
         try {
             const validate= await loginSchema.validateAsync(req.body)
             const login = await authServices.login(validate)
+            console.log()
             if(login.error){
                 return res.send({
                     error:login.error

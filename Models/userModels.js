@@ -38,11 +38,12 @@ module.exports={
             }
         }
     },
-    getAllUser:async(query)=>{
+    getAllUser:async(query,userId,role)=>{
         try {
-
+            console.log("model2222222222222222222222222222222222",query,userId,role)
             const user=await models.users.findAll({
                 where:{
+                ...(role == "admin" ? true : { userId:userId }),
                 ...(query.userName 
                     ? {userName:{[Op.substring]:query.userName}}:true
                 ),
@@ -50,7 +51,7 @@ module.exports={
                     ? {createdAt:{[Op.substring]:query.createdAt}}:true
                 )
                 },
-                attributes:["userId","userName"],
+                attributes:["userId","userName","createdAt"],
                 include:{
                     model:models.tasks
                    },
@@ -59,11 +60,11 @@ module.exports={
             order:[
                 [
                 query.sortBy? query.sortBy :"createdAt",
-                query.orderBy?query.orderBy:"ASC"
+                query.orderBy?query.orderBy:"ASC",
                 ]
             ]
             });
-            console.log("models users  ",user)
+            console.log("querryyyyyy    userrrrrrrrrrr",user)
             return{
                 response:user
             }

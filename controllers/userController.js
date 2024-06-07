@@ -3,6 +3,7 @@ const userservice=require('../services/userServices');
 
 const Schemauser=joi.object().keys({
     userName:joi.string().min(3).max(20).required(),
+    role:joi.string().valid("customer","admin").required(),
     password:joi.string().min(3).max(20).required(),
     
    
@@ -17,7 +18,7 @@ const updateUserSchema=joi.object().keys({
     userName:joi.string(),
 })
 
-const getAllUser=joi.object().keys({
+const getAllUserSchema=joi.object().keys({
     pageNo:joi.number().min(1).required(),
     limit:joi.number().valid(5,10),
     userName:joi.string(),
@@ -49,10 +50,12 @@ module.exports={
     },
     getAllUser:async(req,res)=>{
       try {
-        console.log("Get All Userrrrsssssss Controllers")
-        const validate= await getAllUser.validateAsync(req.query)
-        const user=await userservice.getAllUser(validate)
-        console.log("get users controller",user)
+        const userId=req.userData.userId;
+        const role=req.userData.role;
+        const validate= await getAllUserSchema.validateAsync(req.query)
+        
+        const user=await userservice.getAllUser(validate,userId,role)
+     
         if(user.error){
            return res.send({error:user.error})
         }
