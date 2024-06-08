@@ -13,14 +13,17 @@ module.exports={
         try {
             const validate= await loginSchema.validateAsync(req.body)
             const login = await authServices.login(validate)
-            console.log()
-            if(login.error){
+            
+            if(login.error || login.response.session=="null"){
+                res.cookie("auth","null")
                 return res.send({
-                    error:login.error
+                    error:login?.error || login.response
                 })
             }
-            res.cookie("auth",login.response.token)
-            delete login.response.token
+           
+            const {sessionId,userId,token}=login.response.session
+            res.cookie("auth",{sessionId,token,userId})
+            delete login.response.session.dataValues.token
             return res.send({
                 response:login.response
             })
